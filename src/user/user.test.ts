@@ -17,7 +17,7 @@ test('object assignment', () => {
   expect(data).not.toBe({one: 1, two: 2})
 })
 
-test.only('toEqual vs toStrictEqual', () => {
+test('toEqual vs toStrictEqual', () => {
   const a = {a: 1}
   const b = {a: 1, b: undefined}
   // toEqual 忽略 undefined 属性
