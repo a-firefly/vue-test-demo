@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { increment } from './index'
+import { compileCode, increment } from './index'
 
 describe('test increment', () => {
   test('increment 1 to be 2', () => {
@@ -102,6 +102,21 @@ describe('match object', () => {
     })
   })
 
-  test('non match')
+  test('compiling an empty string throws', () => {
+    // 检查是否抛出异常
+    expect(() => compileCode('')).toThrow()
+    // 检查错误信息
+    expect(() => compileCode('')).toThrow('Cannot compile empty string')
+    // 使用正则表达式检查错误信息
+    expect(() => compileCode('')).toThrow(/empty string/)
+  })
+})
 
+describe('soft asset', () => {
+  test('check multiple fields', () => {
+    const user = { name: 'james', age: 33, role: 'admin' }
+    expect.soft(user.name).toBe('james')
+    expect.soft(user.age).toBe(33)
+    expect.soft(user.role).toBe('admin')
+  })
 })
