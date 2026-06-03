@@ -48,3 +48,60 @@ describe('match string', () => {
     expect('vitest@4.2.0').toMatch(/vitest@\d+\.\d+\.\d+/)
   })
 })
+
+
+describe('match array', () => {
+  test('shoppingList contains milk', () => {
+    const shoppingList = ['milk', 'bread', 'eggs', 'butter']
+    expect(shoppingList).toContain('milk')
+    expect(new Set(shoppingList)).toContain('milk')
+  })
+
+  const james = {name: 'james', age: 33}
+  const owen = {name: 'Owen', age: 22}
+  const reves = {name: 'reves', age: 20}
+  const team = [james, owen, reves]
+  test('team contains james', () => {
+    expect(team).toContain(james)
+  })
+})
+
+describe('match object', () => {
+  const user = {
+    id: 1,
+    name: 'Alice',
+    email: 'alice@example.com',
+    createdAt: '2024-01-01',
+    address: { city: 'Paris', zip: '75001' },
+    roles: ['viewer', 'admin'],
+  }
+
+  test('user has expected fileds', () => {
+    // 这里我们只关心 name 和 email
+    expect(user).toMatchObject({
+      id: 1,
+      email: 'alice@example.com',
+    })
+  })
+
+  test('object has property and optional value', () => {
+    expect(user).toHaveProperty('name')
+    expect(user).toHaveProperty('name', 'Alice')
+    expect(user).toHaveProperty('address.city')
+    expect(user).toHaveProperty('address.city', 'Paris')
+  })
+
+  test('user has the right shape', () => {
+    expect(user).toEqual({
+      id: expect.any(Number),
+      name: 'Alice',
+      createdAt: expect.stringMatching(/\d{4}-\d{2}-\d{2}/),
+      email: expect.stringContaining('@'),
+      roles: expect.arrayContaining(['viewer']),
+      address: expect.any(Object),
+    })
+  })
+
+  test('non match')
+
+})
