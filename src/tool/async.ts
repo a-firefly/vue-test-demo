@@ -19,3 +19,13 @@ export function fetchData(num: number): Promise<User[]> {
   }
   return Promise.resolve(data)
 }
+
+export function slowTask(duration: number) {
+  const promise = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('done')
+    }, duration);
+  })
+
+  return promise
+}
