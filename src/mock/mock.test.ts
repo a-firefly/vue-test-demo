@@ -1,3 +1,5 @@
+import { calculator } from './mock.ts'
+
 test('mock function basicks', () => {
   const getApples = vi.fn()
 
@@ -35,4 +37,36 @@ test('mock with custom implementation', () => {
   add.mockImplementation((a, b) => a + b)
 
   expect(add(1, 2)).toBe(3)
+})
+
+test('spy on a method', () => {
+  const calc = new calculator()
+  const spy = vi.spyOn(calc, 'add')
+  // 原始的实现仍然可以工作
+  expect(calc.add(1, 2)).toBe(3)
+
+  // 我们可以观察调用
+  expect(spy).toHaveBeenCalledWith(1, 2)
+  expect(spy).toHaveBeenCalledTimes(1)
+})
+
+test('spy can override implementation', () => {
+  const calc = new calculator()
+  const spy = vi.spyOn(calc, 'add')
+  spy.mockReturnValue(10)
+  // 原始的实现已经不可以工作
+  expect(calc.add(1, 2)).toBe(10)
+
+  // 我们可以观察调用
+  expect(spy).toHaveBeenCalledWith(1, 2)
+  expect(spy).toHaveBeenCalledTimes(1)
+})
+
+test('spy can override implementation', () => {
+  const calc = new calculator()
+  // 原始的实现已经不可以工作
+  expect(calc.add(1, 2)).toBe(3)
+
+  // expect(spy).toHaveBeenCalledWith(1, 2)
+  // expect(spy).toHaveBeenCalledTimes(1)
 })
